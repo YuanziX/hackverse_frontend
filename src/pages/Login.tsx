@@ -1,20 +1,39 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "@/hooks/use-login";
+
+import { useToast } from "@/components/ui/use-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const login = useLogin();
+  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder for login logic
-    console.log("Login attempt with:", { email, password });
+
+    login.mutate(
+      { email, password },
+      {
+        onSuccess: () => {
+          navigate("/dashboard");
+        },
+        onError: (error) => {
+          toast({
+            variant: "destructive",
+            title: "Login Failed",
+            description:
+              error.message || "Something went wrong. Please try again.",
+          });
+        },
+      }
+    );
   };
 
   return (
