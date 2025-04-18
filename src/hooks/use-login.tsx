@@ -8,7 +8,7 @@ type LoginInput = {
 };
 
 type LoginResponse = {
-  token: string;
+  access_token: string;
 };
 
 export const useLogin = () => {
@@ -19,7 +19,7 @@ export const useLogin = () => {
       return res.data;
     },
     onSuccess: (data) => {
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", data.access_token);
     },
   });
 };
