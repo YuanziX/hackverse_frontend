@@ -19,6 +19,7 @@ const VideoRecorder = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -102,6 +103,8 @@ const VideoRecorder = () => {
       return;
     }
 
+    setIsUploading(true);
+
     if (recordedBlob) {
       const formData = new FormData();
       formData.append("file", recordedBlob, "recorded-video.webm");
@@ -128,6 +131,8 @@ const VideoRecorder = () => {
       } catch (err) {
         console.error("Upload failed:", err);
         setError("Video upload failed.");
+      } finally {
+        setIsUploading(false);
       }
     }
   };
@@ -164,7 +169,7 @@ const VideoRecorder = () => {
   };
 
   return (
-    <div className="flex-col min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+    <div className="flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <div className="flex-row h-18 bg-black w-full">
         <Button
           variant="secondary"
@@ -178,7 +183,7 @@ const VideoRecorder = () => {
           Record your experience{" "}
         </span>
       </div>
-      <Card className="max-w-2xl mx-auto shadow-lg transform hover:scale-[1.02] transition-all my-12">
+      <Card className="max-w-2xl mx-auto shadow-lg transform hover:scale-[1.02] transition-all my-12 bg-gray-800/50 backdrop-blur-xl border-gray-700">
         <CardContent className="p-6 space-y-6">
           {error && (
             <div className="text-red-500 text-center py-2">{error}</div>
@@ -235,11 +240,25 @@ const VideoRecorder = () => {
                 <Button
                   onClick={handleUpload}
                   className="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white"
+                  disabled={isUploading}
                 >
-                  <Upload className="mr-2 h-4 w-4" />
-                  Upload Video
+                  {isUploading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="mr-2 h-4 w-4" />
+                      Upload Video
+                    </>
+                  )}
                 </Button>
-                <Button onClick={discardRecording} variant="destructive">
+                <Button 
+                  onClick={discardRecording} 
+                  variant="destructive"
+                  disabled={isUploading}
+                >
                   <Trash2 className="mr-2 h-4 w-4" />
                   Discard
                 </Button>
