@@ -21,6 +21,7 @@ const VideoRecorder = () => {
   const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [prompt, setPrompt] = useState("Generate me a journal");
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -109,6 +110,7 @@ const VideoRecorder = () => {
     if (recordedBlob) {
       const formData = new FormData();
       formData.append("file", recordedBlob, "recorded-video.webm");
+      formData.append("prompt", prompt);
 
       try {
         const response = await fetch(`${BASE_URL}/video/upload`, {
@@ -219,6 +221,22 @@ const VideoRecorder = () => {
                 <span className="text-sm font-medium">Recording</span>
               </div>
             )}
+          </div>
+          <div className="space-y-2">
+            <label
+              htmlFor="prompt"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Custom Prompt
+            </label>
+            <textarea
+              id="prompt"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              className="w-full border rounded-md p-2 text-sm"
+              rows={3}
+              placeholder="Generate me a journal"
+            />
           </div>
           <div className="flex justify-center gap-4">
             {!isRecording && !recordedBlob && (
