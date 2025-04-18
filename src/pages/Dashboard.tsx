@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { History, MessageSquareIcon, Video, Loader2 } from "lucide-react";
@@ -7,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/lib/constant";
 import { format } from "date-fns";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Story {
   id: string;
@@ -18,17 +18,30 @@ interface Story {
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const { data: stories, isLoading } = useQuery({
     queryKey: ["stories"],
     queryFn: async () => {
-      const response = await fetch(`${BASE_URL}/stories`, {
+      const response = await fetch(`${BASE_URL}/video/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
+      if (response.status === 404) {
+        toast({
+          title: "No stories found",
+          description: "You haven't recorded any stories yet.",
+          variant: "default",
+        });
+        return [];
+      }
+
       if (!response.ok) throw new Error("Failed to fetch stories");
-      return response.json();
+
+      const data = await response.json();
+      return data;
     },
   });
 
@@ -65,7 +78,7 @@ const Dashboard = () => {
             </Button>
           </div>
         </div>
-        
+
         {isLoading ? (
           <div className="flex justify-center items-center h-40">
             <Loader2 className="w-8 h-8 animate-spin text-purple-600" />

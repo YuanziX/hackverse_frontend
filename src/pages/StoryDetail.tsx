@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/lib/constant";
@@ -26,7 +25,7 @@ const StoryDetail = () => {
   const { data: story, isLoading } = useQuery({
     queryKey: ["story", id],
     queryFn: async () => {
-      const response = await fetch(`${BASE_URL}/stories/${id}`, {
+      const response = await fetch(`${BASE_URL}/video/timeline/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
