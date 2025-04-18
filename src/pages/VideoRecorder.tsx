@@ -9,6 +9,7 @@ import {
   Play,
   Pause,
   SquareArrowLeft,
+  Loader2,
 } from "lucide-react";
 import { BASE_URL } from "@/lib/constant";
 import { useToast } from "@/components/ui/use-toast";
@@ -169,7 +170,7 @@ const VideoRecorder = () => {
   };
 
   return (
-    <div className="flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="flex-col min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
       <div className="flex-row h-18 bg-black w-full">
         <Button
           variant="secondary"
@@ -183,7 +184,7 @@ const VideoRecorder = () => {
           Record your experience{" "}
         </span>
       </div>
-      <Card className="max-w-2xl mx-auto shadow-lg transform hover:scale-[1.02] transition-all my-12 bg-gray-800/50 backdrop-blur-xl border-gray-700">
+      <Card className="max-w-2xl mx-auto shadow-lg transform hover:scale-[1.02] transition-all my-12">
         <CardContent className="p-6 space-y-6">
           {error && (
             <div className="text-red-500 text-center py-2">{error}</div>
@@ -254,8 +255,8 @@ const VideoRecorder = () => {
                     </>
                   )}
                 </Button>
-                <Button 
-                  onClick={discardRecording} 
+                <Button
+                  onClick={discardRecording}
                   variant="destructive"
                   disabled={isUploading}
                 >

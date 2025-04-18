@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,15 +36,17 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <Card className="w-[350px] bg-gray-800/50 backdrop-blur-xl border-gray-700">
+    <div className="min-h-screen flex items-center justify-center">
+      <Card className="w-[350px] backdrop-blur-xl">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center text-white">Create Account</CardTitle>
+          <CardTitle className="text-2xl text-center text-white">
+            Create Account
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-gray-200">Email</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -53,11 +54,10 @@ const Signup = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-gray-200">Password</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -65,11 +65,10 @@ const Signup = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
               />
             </div>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full"
               disabled={signup.isPending}
             >
@@ -85,7 +84,7 @@ const Signup = () => {
             <Button
               type="button"
               variant="outline"
-              className="w-full bg-transparent border-gray-600 text-gray-200 hover:bg-gray-700/50"
+              className="w-full"
               onClick={() => navigate("/login")}
               disabled={signup.isPending}
             >
