@@ -1,7 +1,6 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { History, Video } from "lucide-react";
+import { History, MessageSquareIcon, Video } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 
@@ -22,6 +21,13 @@ const Dashboard = () => {
           </h1>
           <div className="flex gap-4">
             <Button
+              onClick={() => navigate("/chat")}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+            >
+              <MessageSquareIcon className="w-4 h-4" />
+              Talk to AI
+            </Button>
+            <Button
               onClick={() => navigate("/record")}
               className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
             >
@@ -40,10 +46,10 @@ const Dashboard = () => {
         </div>
         <div className="grid gap-4">
           {mockData.map((video, index) => (
-            <Card 
-              key={video.id} 
+            <Card
+              key={video.id}
               className="hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] animate-fade-in"
-              style={{ '--animation-order': index } as React.CSSProperties}
+              style={{ "--animation-order": index } as React.CSSProperties}
             >
               <CardHeader>
                 <CardTitle>{video.title}</CardTitle>

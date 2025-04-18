@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +10,7 @@ import VideoRecorder from "./pages/VideoRecorder";
 import History from "./pages/History";
 import NotFound from "./pages/NotFound";
 import Index from "./pages/Index";
+import Chat from "./pages/Chat";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +27,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/record" element={<VideoRecorder />} />
           <Route path="/history" element={<History />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
