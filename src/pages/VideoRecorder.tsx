@@ -8,8 +8,6 @@ import {
   Trash2,
   Play,
   Pause,
-  ArrowBigLeft,
-  LucideCircleArrowLeft,
   SquareArrowLeft,
 } from "lucide-react";
 import { BASE_URL } from "@/lib/constant";
@@ -44,7 +42,7 @@ const VideoRecorder = () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
-        audio: true,
+        audio: false,
       });
       streamRef.current = stream;
 
@@ -98,6 +96,12 @@ const VideoRecorder = () => {
   };
 
   const handleUpload = async () => {
+    setError(null);
+    if (!recordedBlob) {
+      setError("No video recorded to upload.");
+      return;
+    }
+
     if (recordedBlob) {
       const formData = new FormData();
       formData.append("file", recordedBlob, "recorded-video.webm");
