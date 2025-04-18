@@ -116,6 +116,10 @@ const VideoRecorder = () => {
         });
 
         const data = await response.json();
+
+        setRecordedBlob(null);
+        discardRecording();
+
         toast({
           variant: "default",
           title: "Upload Successful",
