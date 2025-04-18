@@ -11,6 +11,7 @@ import History from "./pages/History";
 import NotFound from "./pages/NotFound";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
+import StoryDetail from "./pages/StoryDetail";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/record" element={<VideoRecorder />} />
           <Route path="/history" element={<History />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/story/:id" element={<StoryDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
