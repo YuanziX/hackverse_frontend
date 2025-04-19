@@ -10,10 +10,13 @@ import {
   Pause,
   SquareArrowLeft,
   Loader2,
+  FileVideo,
 } from "lucide-react";
 import { BASE_URL } from "@/lib/constant";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
 
 const VideoRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -22,6 +25,7 @@ const VideoRecorder = () => {
   const [error, setError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [prompt, setPrompt] = useState("Generate me a journal");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -98,6 +102,30 @@ const VideoRecorder = () => {
     }
   };
 
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null);
+    const file = event.target.files?.[0];
+    if (file) {
+      if (!file.type.startsWith('video/')) {
+        setError("Please select a valid video file.");
+        return;
+      }
+      setRecordedBlob(file);
+      if (videoRef.current) {
+        // Revoke previous URL if exists
+        if (blobUrlRef.current) {
+          URL.revokeObjectURL(blobUrlRef.current);
+        }
+        blobUrlRef.current = URL.createObjectURL(file);
+        videoRef.current.src = blobUrlRef.current;
+      }
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
+  };
+
   const handleUpload = async () => {
     setError(null);
     if (!recordedBlob) {
@@ -172,7 +200,7 @@ const VideoRecorder = () => {
   };
 
   return (
-    <div className="flex-col min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+    <div className="flex-col min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="flex-row h-18 bg-black w-full">
         <Button
           variant="secondary"
@@ -182,14 +210,13 @@ const VideoRecorder = () => {
           <SquareArrowLeft className="h-4 w-4" />
         </Button>
         <span className="py-4 text-white font-medium text-2xl">
-          {" "}
-          Record your experience{" "}
+          Record or upload your experience
         </span>
       </div>
-      <Card className="max-w-2xl mx-auto shadow-lg transform hover:scale-[1.02] transition-all my-12">
+      <Card className="max-w-2xl mx-auto shadow-lg transform hover:scale-[1.02] transition-all my-12 dark:bg-gray-800 dark:border-gray-700">
         <CardContent className="p-6 space-y-6">
           {error && (
-            <div className="text-red-500 text-center py-2">{error}</div>
+            <div className="text-red-500 text-center py-2 dark:text-red-400">{error}</div>
           )}
           <div className="aspect-video bg-gray-900 rounded-lg overflow-hidden relative group">
             <video
@@ -222,10 +249,17 @@ const VideoRecorder = () => {
               </div>
             )}
           </div>
+          <Input 
+            type="file"
+            accept="video/*"
+            className="hidden"
+            onChange={handleFileSelect}
+            ref={fileInputRef}
+          />
           <div className="space-y-2">
             <label
               htmlFor="prompt"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
               Custom Prompt
             </label>
@@ -233,20 +267,30 @@ const VideoRecorder = () => {
               id="prompt"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              className="w-full border rounded-md p-2 text-sm"
+              className="w-full border rounded-md p-2 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
               rows={3}
               placeholder="Generate me a journal"
             />
           </div>
           <div className="flex justify-center gap-4">
             {!isRecording && !recordedBlob && (
-              <Button
-                onClick={startRecording}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-              >
-                <Video className="mr-2 h-4 w-4" />
-                Start Recording
-              </Button>
+              <>
+                <Button
+                  onClick={startRecording}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white dark:from-purple-500 dark:to-pink-500"
+                >
+                  <Video className="mr-2 h-4 w-4" />
+                  Start Recording
+                </Button>
+                <Button
+                  onClick={triggerFileInput}
+                  variant="outline"
+                  className="border-purple-200 hover:bg-purple-50 dark:border-purple-700 dark:hover:bg-purple-900"
+                >
+                  <FileVideo className="mr-2 h-4 w-4" />
+                  Pick Video File
+                </Button>
+              </>
             )}
             {isRecording && (
               <Button onClick={stopRecording} variant="destructive">
@@ -258,7 +302,7 @@ const VideoRecorder = () => {
               <>
                 <Button
                   onClick={handleUpload}
-                  className="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white"
+                  className="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white dark:from-green-500 dark:to-teal-500"
                   disabled={isUploading}
                 >
                   {isUploading ? (
