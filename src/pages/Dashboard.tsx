@@ -46,7 +46,7 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
       <Navigation />
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-6">
@@ -70,7 +70,7 @@ const Dashboard = () => {
             </Button>
             <Button
               variant="outline"
-              className="border-purple-200 hover:bg-purple-50 dark:border-purple-800 dark:hover:bg-purple-900"
+              className="border-purple-200 hover:bg-purple-50"
               onClick={() => navigate("/history")}
             >
               <History className="w-4 h-4 mr-2" />
@@ -88,16 +88,16 @@ const Dashboard = () => {
             {stories?.map((story: Story, index: number) => (
               <Card
                 key={story.id}
-                className="hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] animate-fade-in cursor-pointer dark:bg-gray-800 dark:border-gray-700"
+                className="hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] animate-fade-in cursor-pointer"
                 onClick={() => navigate(`/story/${story.id}`)}
               >
                 <CardHeader>
-                  <CardTitle className="text-gray-900 dark:text-gray-100">
+                  <CardTitle className="text-gray-900">
                     {story.title || story.id}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-gray-600">
                     Recorded: {format(new Date(story.video.created_at), "PPpp")}
                   </p>
                 </CardContent>

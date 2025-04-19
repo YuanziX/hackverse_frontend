@@ -38,7 +38,7 @@ const StoryDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
         <Navigation />
         <div className="container mx-auto p-4">
           <div className="flex justify-center items-center h-40">
@@ -50,7 +50,7 @@ const StoryDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
       <Navigation />
       <div className="container mx-auto p-4">
         <div className="flex items-center mb-6">
@@ -81,8 +81,8 @@ const StoryDetail = () => {
           </ScrollArea>
         )}
 
-        <div className="prose prose-purple max-w-none dark:prose-invert">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+        <div className="prose prose-purple max-w-none">
+          <div className="bg-white rounded-lg p-6 shadow-lg">
             <p className="whitespace-pre-wrap">{story?.story}</p>
           </div>
         </div>

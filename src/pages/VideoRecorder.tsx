@@ -76,7 +76,6 @@ const VideoRecorder = () => {
         setRecordedBlob(blob);
         if (videoRef.current) {
           videoRef.current.srcObject = null;
-          // Revoke previous URL if exists
           if (blobUrlRef.current) {
             URL.revokeObjectURL(blobUrlRef.current);
           }
@@ -112,7 +111,6 @@ const VideoRecorder = () => {
       }
       setRecordedBlob(file);
       if (videoRef.current) {
-        // Revoke previous URL if exists
         if (blobUrlRef.current) {
           URL.revokeObjectURL(blobUrlRef.current);
         }
@@ -200,7 +198,7 @@ const VideoRecorder = () => {
   };
 
   return (
-    <div className="flex-col min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="flex-col min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
       <div className="flex-row h-18 bg-black w-full">
         <Button
           variant="secondary"
@@ -213,10 +211,10 @@ const VideoRecorder = () => {
           Record or upload your experience
         </span>
       </div>
-      <Card className="max-w-2xl mx-auto shadow-lg transform hover:scale-[1.02] transition-all my-12 dark:bg-gray-800 dark:border-gray-700">
+      <Card className="max-w-2xl mx-auto shadow-lg transform hover:scale-[1.02] transition-all my-12">
         <CardContent className="p-6 space-y-6">
           {error && (
-            <div className="text-red-500 text-center py-2 dark:text-red-400">{error}</div>
+            <div className="text-red-500 text-center py-2">{error}</div>
           )}
           <div className="aspect-video bg-gray-900 rounded-lg overflow-hidden relative group">
             <video
@@ -259,7 +257,7 @@ const VideoRecorder = () => {
           <div className="space-y-2">
             <label
               htmlFor="prompt"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              className="block text-sm font-medium text-gray-700"
             >
               Custom Prompt
             </label>
@@ -267,7 +265,7 @@ const VideoRecorder = () => {
               id="prompt"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              className="w-full border rounded-md p-2 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
+              className="w-full border rounded-md p-2 text-sm"
               rows={3}
               placeholder="Generate me a journal"
             />
