@@ -105,7 +105,7 @@ const VideoRecorder = () => {
     setError(null);
     const file = event.target.files?.[0];
     if (file) {
-      if (!file.type.startsWith('video/')) {
+      if (!file.type.startsWith("video/")) {
         setError("Please select a valid video file.");
         return;
       }
@@ -147,6 +147,11 @@ const VideoRecorder = () => {
           body: formData,
         });
 
+        if (!response.ok) {
+          setError("Upload failed.");
+          return;
+        }
+
         const data = await response.json();
 
         setRecordedBlob(null);
@@ -157,6 +162,8 @@ const VideoRecorder = () => {
           title: "Upload Successful",
           description: "Your video has been uploaded successfully.",
         });
+
+        navigate(`/story/${data["timeline_id"]}`);
       } catch (err) {
         console.error("Upload failed:", err);
         setError("Video upload failed.");
@@ -247,7 +254,7 @@ const VideoRecorder = () => {
               </div>
             )}
           </div>
-          <Input 
+          <Input
             type="file"
             accept="video/*"
             className="hidden"

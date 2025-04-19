@@ -6,6 +6,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Navigation from "@/components/Navigation";
+import ReactMarkdown from "react-markdown";
 
 interface Frame {
   id: string;
@@ -83,7 +84,7 @@ const StoryDetail = () => {
 
         <div className="prose prose-purple max-w-none">
           <div className="bg-white rounded-lg p-6 shadow-lg">
-            <p className="whitespace-pre-wrap">{story?.story}</p>
+            <ReactMarkdown>{story?.story}</ReactMarkdown>
           </div>
         </div>
       </div>
